@@ -6,13 +6,14 @@ from pymongo import MongoClient
 import json
 import traceback
 import Assignment_Interface as Assignment
+import time
 
 DATABASE_NAME = "ddsassignment"
 COLLECTION_NAME = "businessCollection"
 CITY_TO_SEARCH = "tempe"
-MAX_DISTANCE = 100
-CATEGORIES_TO_SEARCH = ["Fashion", "Food", "Cafes"]
-MY_LOCATION = ["40", "50"]  # [LATITUDE, LONGITUDE]
+MAX_DISTANCE = 100000
+CATEGORIES_TO_SEARCH = ["Automotive", "Auto Parts & Supplies"]
+MY_LOCATION = ["33.276941999999998", "-111.860044"]  # [LATITUDE, LONGITUDE]
 SAVE_LOCATION_1 = "findBusinessBasedOnCity.txt"
 SAVE_LOCATION_2 = "findBusinessBasedOnLocation.txt"
 
@@ -55,11 +56,13 @@ if __name__ == '__main__':
 
         # Finding All Business name and address(full_address, city and state) present in radius of MY_LOCATION for CATEGORIES_TO_SEARCH
         print("Executing FindBusinessBasedOnLocation function")
+        start = time.process_time()
         Assignment.FindBusinessBasedOnLocation(CATEGORIES_TO_SEARCH, MY_LOCATION, MAX_DISTANCE, SAVE_LOCATION_2,
                                                 collection)
+        print(time.process_time() - start)
 
         # Delete database
-        # deleteDB(conn, DATABASE_NAME)
+        deleteDB(conn, DATABASE_NAME)
         conn.close()
 
     except Exception as detail:
